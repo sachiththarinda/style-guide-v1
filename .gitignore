@@ -1,0 +1,9 @@
+node_modules
+.next
+next-env.d.ts
+
+# ShipStudio metadata
+.shipstudio/
+
+.DS_Store
+*.tsbuildinfo

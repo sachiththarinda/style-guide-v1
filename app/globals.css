@@ -1,0 +1,418 @@
+@import "tailwindcss";
+
+/* ==========================================================================
+   STYLE GUIDE TOKENS  (single source of truth)
+   --------------------------------------------------------------------------
+   To reuse on a new project: change the values in this file only.
+   1. Brand palette        -> @theme  "Colors"
+   2. Fonts                -> @theme  "Fonts"  (+ app/layout.tsx font imports)
+   3. Type scale           -> @theme  "Typography"
+   4. Light/dark surfaces  -> :root and .dark  "Semantic tokens"
+   ========================================================================== */
+
+/* Dark mode is toggled by adding the `dark` class to <html>. */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* --------------------------------------------------------------------------
+   1. RAW TOKENS  -> generate Tailwind utilities (bg-primary, text-h1, ...)
+   -------------------------------------------------------------------------- */
+/* `static` keeps every token as a CSS variable, even if unused in markup. */
+@theme static {
+  /* ---- Fonts ---- */
+  --font-display: var(--font-league-gothic), "Arial Narrow", sans-serif;
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+
+  /* ---- Colors: brand ---- */
+  --color-primary: #4a7fee;
+  --color-primary-hover: #3b6bd6;
+  --color-primary-soft: #e3ecfd;
+  --color-secondary: #6233f5;
+  --color-secondary-hover: #5025d8;
+  --color-accent: #f5ab6b;
+
+  /* ---- Colors: neutrals ---- */
+  --color-dark: #000000;
+  --color-dark-secondary: #4a4a4a;
+  --color-light: #ffffff;
+  --color-light-secondary: #e5e5e5;
+
+  /* ---- Colors: feedback ---- */
+  --color-success: #1f9d55;
+  --color-warning: #f5ab6b;
+  --color-danger: #d92d20;
+
+  /* ---- Typography: fluid sizes via clamp(min, preferred, max) (+ line-height / tracking / weight) ---- */
+  --text-display: clamp(5rem, 3rem + 8vw, 10rem);
+  --text-display--line-height: 0.9;
+  --text-display--letter-spacing: -0.01em;
+  --text-display--font-weight: 400;
+
+  --text-h1: clamp(3.25rem, 2.55rem + 2.8vw, 5rem);
+  --text-h1--line-height: 0.95;
+  --text-h1--letter-spacing: 0;
+  --text-h1--font-weight: 400;
+
+  --text-h2: clamp(2.75rem, 2.25rem + 2vw, 4rem);
+  --text-h2--line-height: 1;
+  --text-h2--letter-spacing: 0;
+  --text-h2--font-weight: 400;
+
+  --text-h3: clamp(2.25rem, 1.95rem + 1.2vw, 3rem);
+  --text-h3--line-height: 1;
+  --text-h3--letter-spacing: 0;
+  --text-h3--font-weight: 400;
+
+  --text-h4: clamp(1.75rem, 1.55rem + 0.8vw, 2.25rem);
+  --text-h4--line-height: 1.05;
+  --text-h4--letter-spacing: 0;
+  --text-h4--font-weight: 400;
+
+  --text-h5: clamp(1.375rem, 1.225rem + 0.6vw, 1.75rem);
+  --text-h5--line-height: 1.1;
+  --text-h5--letter-spacing: 0;
+  --text-h5--font-weight: 400;
+
+  --text-h6: clamp(1.125rem, 1.075rem + 0.2vw, 1.25rem);
+  --text-h6--line-height: 1.15;
+  --text-h6--letter-spacing: 0.01em;
+  --text-h6--font-weight: 400;
+
+  /* Paragraphs: p1 (largest) -> p4 (smallest). Weight comes from font-* */
+  --text-p1: clamp(1.25rem, 1.15rem + 0.4vw, 1.5rem);
+  --text-p1--line-height: 1.4;
+  --text-p2: clamp(1.125rem, 1.075rem + 0.2vw, 1.25rem);
+  --text-p2--line-height: 1.5;
+  --text-p3: 1rem;
+  --text-p3--line-height: 1.5;
+  --text-p4: 0.875rem;
+  --text-p4--line-height: 1.5;
+
+  /* Small UI text (buttons, labels, captions) */
+  --text-label: 0.75rem;
+  --text-label--line-height: 1.2;
+  --text-label--letter-spacing: 0.04em;
+
+  /* ---- Font weights (Inter) ---- */
+  --font-weight-light: 300;
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+
+  /* ---- Shadows: xxs -> 3xl ---- */
+  --shadow-xxs: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --shadow-xs: 0 1px 3px 0 rgb(0 0 0 / 0.08), 0 1px 2px -1px rgb(0 0 0 / 0.06);
+  --shadow-sm: 0 2px 6px -1px rgb(0 0 0 / 0.08), 0 1px 3px -1px rgb(0 0 0 / 0.06);
+  --shadow-md: 0 6px 12px -2px rgb(0 0 0 / 0.1), 0 3px 6px -3px rgb(0 0 0 / 0.08);
+  --shadow-lg: 0 12px 24px -4px rgb(0 0 0 / 0.12), 0 4px 8px -4px rgb(0 0 0 / 0.08);
+  --shadow-xl: 0 20px 32px -6px rgb(0 0 0 / 0.14), 0 8px 12px -6px rgb(0 0 0 / 0.08);
+  --shadow-2xl: 0 28px 56px -12px rgb(0 0 0 / 0.22);
+  --shadow-3xl: 0 40px 80px -16px rgb(0 0 0 / 0.3);
+
+  /* ---- Radius ---- */
+  --radius-xs: 0.25rem;
+  --radius-sm: 0.375rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 0.75rem;
+  --radius-xl: 1rem;
+  --radius-pill: 999px;
+
+  /* ---- Fluid layout spacing (clamp, 400px -> 1400px viewport) ---- */
+  --space-gutter: clamp(1rem, 0.8rem + 0.8vw, 1.5rem);
+  --space-gap: clamp(1rem, 0.6rem + 1.6vw, 2rem);
+  --space-section: clamp(2.5rem, 1.9rem + 2.4vw, 4rem);
+  --space-hero: clamp(4rem, 3.2rem + 3.2vw, 6rem);
+
+  /* ---- Spacing base (p-4 = 4 * 0.25rem) + layout ---- */
+  --spacing: 0.25rem;
+  --container-page: 80rem;
+  --container-prose: 40rem;
+
+  /* ---- Breakpoints ---- */
+  --breakpoint-sm: 40rem;
+  --breakpoint-md: 48rem;
+  --breakpoint-lg: 64rem;
+  --breakpoint-xl: 80rem;
+  --breakpoint-2xl: 96rem;
+
+  /* ---- Motion ---- */
+  --ease-standard: cubic-bezier(0.2, 0, 0, 1);
+  --duration-fast: 150ms;
+  --duration-base: 250ms;
+  --duration-slow: 400ms;
+}
+
+/* --------------------------------------------------------------------------
+   2. SEMANTIC TOKENS (swap between light & dark mode)
+      Use in markup as: bg-surface, text-fg, border-line, ...
+   -------------------------------------------------------------------------- */
+:root {
+  --bg: var(--color-light);
+  --bg-alt: var(--color-light-secondary);
+  --fg: var(--color-dark);
+  --fg-muted: var(--color-dark-secondary);
+  --line: var(--color-light-secondary);
+  --surface: var(--color-light);
+  --focus-ring: var(--color-primary);
+}
+
+.dark {
+  --bg: var(--color-dark);
+  --bg-alt: var(--color-dark-secondary);
+  --fg: var(--color-light);
+  --fg-muted: var(--color-light-secondary);
+  --line: var(--color-dark-secondary);
+  --surface: #111111;
+  --focus-ring: var(--color-primary);
+}
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-bg-alt: var(--bg-alt);
+  --color-fg: var(--fg);
+  --color-fg-muted: var(--fg-muted);
+  --color-line: var(--line);
+  --color-surface: var(--surface);
+  --color-focus: var(--focus-ring);
+}
+
+/* --------------------------------------------------------------------------
+   3. BASE
+   -------------------------------------------------------------------------- */
+@layer base {
+  html {
+    color-scheme: light;
+  }
+
+  html.dark {
+    color-scheme: dark;
+  }
+
+  body {
+    @apply bg-bg font-sans text-p3 text-fg antialiased;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply font-display uppercase;
+  }
+
+  h1 {
+    @apply text-h1;
+  }
+
+  h2 {
+    @apply text-h2;
+  }
+
+  h3 {
+    @apply text-h3;
+  }
+
+  h4 {
+    @apply text-h4;
+  }
+
+  h5 {
+    @apply text-h5;
+  }
+
+  h6 {
+    @apply text-h6;
+  }
+
+  :focus-visible {
+    @apply outline-2 outline-offset-2 outline-focus;
+  }
+
+  ::selection {
+    @apply bg-primary text-light;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   4. TYPE UTILITIES
+      .display  .h1-.h6 (display font)   .p1-.p4 (body font)
+      Responsive: sizes are fluid clamp() values (see --text-* tokens), no breakpoints.
+   -------------------------------------------------------------------------- */
+@utility heading-display {
+  @apply font-display text-display uppercase;
+}
+
+@utility heading-1 {
+  @apply font-display text-h1 uppercase;
+}
+
+@utility heading-2 {
+  @apply font-display text-h2 uppercase;
+}
+
+@utility heading-3 {
+  @apply font-display text-h3 uppercase;
+}
+
+@utility heading-4 {
+  @apply font-display text-h4 uppercase;
+}
+
+@utility heading-5 {
+  @apply font-display text-h5 uppercase;
+}
+
+@utility heading-6 {
+  @apply font-display text-h6 uppercase;
+}
+
+@utility para-1 {
+  @apply font-sans text-p1;
+}
+
+@utility para-2 {
+  @apply font-sans text-p2;
+}
+
+@utility para-3 {
+  @apply font-sans text-p3;
+}
+
+@utility para-4 {
+  @apply font-sans text-p4;
+}
+
+@utility label-text {
+  @apply font-display text-label uppercase;
+}
+
+/* --------------------------------------------------------------------------
+   5. COMPONENT TOKENS (buttons, inputs, selection controls)
+      Built only from the tokens above so they follow your changes.
+   -------------------------------------------------------------------------- */
+@layer components {
+
+  /* ---- Buttons ---- */
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-sm border border-transparent px-5 py-2.5 font-display text-h6 uppercase transition-colors duration-(--duration-fast) ease-(--ease-standard) disabled:pointer-events-none disabled:opacity-40;
+  }
+
+  .btn-sm {
+    @apply px-3.5 py-1.5 text-label;
+  }
+
+  .btn-lg {
+    @apply px-7 py-3.5 text-h5;
+  }
+
+  .btn-primary {
+    @apply bg-primary text-light hover:bg-primary-hover;
+  }
+
+  .btn-secondary {
+    @apply bg-secondary text-light hover:bg-secondary-hover;
+  }
+
+  .btn-dark {
+    @apply bg-dark text-light hover:bg-dark-secondary;
+  }
+
+  .btn-outline {
+    @apply border-fg bg-transparent text-fg hover:bg-fg hover:text-bg;
+  }
+
+  .btn-outline-primary {
+    @apply border-primary bg-transparent text-primary hover:bg-primary hover:text-light;
+  }
+
+  .btn-icon {
+    @apply size-10 rounded-full p-0;
+  }
+
+  .btn-tertiary {
+    @apply inline-flex items-center gap-1.5 font-display text-h6 uppercase underline underline-offset-4 transition-colors hover:text-primary disabled:pointer-events-none disabled:opacity-40;
+  }
+
+  /* ---- Pill / filter buttons ---- */
+  .pill {
+    @apply inline-flex items-center rounded-sm border border-line bg-surface px-3 py-1 text-p4 font-medium text-fg shadow-xxs transition-colors hover:border-fg;
+  }
+
+  .pill[aria-pressed="true"],
+  .pill[data-active="true"] {
+    @apply border-primary bg-primary-soft text-primary;
+  }
+
+  /* ---- Form fields ---- */
+  .field {
+    @apply flex flex-col gap-1.5;
+  }
+
+  .field-label {
+    @apply text-p4 font-medium text-fg;
+  }
+
+  .field-hint {
+    @apply text-label text-fg-muted;
+  }
+
+  .field-error {
+    @apply text-label text-danger;
+  }
+
+  .input,
+  .textarea {
+    @apply w-full rounded-sm border border-line bg-surface px-3 py-2 text-p4 text-fg shadow-xxs placeholder:text-fg-muted/70 transition-colors duration-(--duration-fast) hover:border-fg-muted focus:border-primary focus:outline-2 focus:outline-primary/30 disabled:cursor-not-allowed disabled:bg-bg-alt disabled:opacity-60 aria-invalid:border-danger;
+  }
+
+  .textarea {
+    @apply min-h-28 resize-y;
+  }
+
+  /* ---- Checkbox / radio ---- */
+  .checkbox,
+  .radio {
+    @apply size-4 shrink-0 cursor-pointer appearance-none border border-fg-muted bg-surface transition-colors checked:border-primary checked:bg-primary disabled:opacity-40;
+  }
+
+  .checkbox {
+    @apply rounded-xs;
+  }
+
+  .checkbox:checked {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3.5 8.5l3 3 6-7'/%3E%3C/svg%3E");
+  }
+
+  .radio {
+    @apply rounded-full;
+  }
+
+  .radio:checked {
+    box-shadow: inset 0 0 0 3px var(--surface);
+  }
+
+  /* ---- Toggle (checkbox with role="switch") ---- */
+  .toggle {
+    @apply relative h-5 w-9 shrink-0 cursor-pointer appearance-none rounded-pill bg-light-secondary transition-colors duration-(--duration-base) checked:bg-primary disabled:opacity-40;
+  }
+
+  .toggle::after {
+    content: "";
+    @apply absolute top-0.5 left-0.5 size-4 rounded-full bg-light shadow-xs transition-transform duration-(--duration-base) ease-(--ease-standard);
+  }
+
+  .toggle:checked::after {
+    @apply translate-x-4;
+  }
+
+  /* ---- Option card (checkbox/radio/toggle with title + description) ---- */
+  .option-card {
+    @apply flex items-start gap-3 rounded-md border border-line bg-surface p-4 shadow-xxs;
+  }
+
+  /* ---- Cards ---- */
+  .card {
+    @apply rounded-lg border border-line bg-surface p-6 shadow-sm;
+  }
+}
